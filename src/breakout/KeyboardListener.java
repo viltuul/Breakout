@@ -22,14 +22,11 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_UP) {
-
-        } else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-
-        } else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            game.getShuttle().setX(game.getShuttle().getX() - 1);
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            game.getShuttle().setX(game.getShuttle().getX() + 5);
+            System.out.println("fytch");
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            game.getShuttle().setX(game.getShuttle().getX() - 1);
+            game.getShuttle().setX(game.getShuttle().getX() - 5);
         }
     }
 

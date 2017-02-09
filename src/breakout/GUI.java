@@ -34,12 +34,12 @@ public class GUI implements Runnable {
         int height = (game.getSize());
         frame.setPreferredSize(new Dimension(width, height));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        luoKomponentit(frame.getContentPane());
+        createComponents(frame.getContentPane());
         frame.pack();
         frame.setVisible(true);
     }
 
-    public void luoKomponentit(Container container) {
+    public void createComponents(Container container) {
         container.add(platform);
         KeyboardListener listener = new KeyboardListener(game);
         frame.addKeyListener(listener);

@@ -5,12 +5,14 @@
  */
 package breakout;
 
+import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Timer;
 
 /**
  *
@@ -24,11 +26,12 @@ public class Game extends Timer implements ActionListener, Updateable {
     private int size;
 
     public Game(int size) {
-        super();
+        super(10, null);
         this.ball = new Ball(size / 2, size / 2);
         this.shuttle = new Shuttle(size - 100, size - 100);
         this.tiles = new ArrayList();
         this.size = size;
+        addActionListener(this);
     }
 
     public int getSize() {
@@ -63,15 +66,34 @@ public class Game extends Timer implements ActionListener, Updateable {
         }
     }
 
+    private void moveBall() {
+        ball.move();
+        if (ball.getX() >= size && ball.getSpeedX() > 0) {
+            ball.setSpeedX(ball.getSpeedX() * -1);
+        } else if (ball.getX() == 0 && ball.getSpeedX() < 0) {
+            ball.setSpeedX(ball.getSpeedX() * -1);
+        }
+        if (ball.getY() == size && ball.getSpeedY() > 0) {
+            ball.setSpeedY(ball.getSpeedY() * -1);
+        } else if (ball.getY() == 0 && ball.getSpeedY() < 0) {
+            ball.setSpeedY(ball.getSpeedY() * -1);
+        }
+    }
+
     @Override
     public void update() {
-        ball.move();
+        moveBall();
         tileCollision();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.equals(KeyEvent.VK_RIGHT)) {
+            this.getShuttle().setX(this.getShuttle().getX() + 5);
+            System.out.println("fytch");
+        } else if (e.equals(KeyEvent.VK_LEFT)) {
+            this.getShuttle().setX(this.getShuttle().getX() - 5);
+        }
     }
 
 }

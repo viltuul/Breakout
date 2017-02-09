@@ -23,15 +23,16 @@ public class Breakout {
         GUI gui = new GUI(game);
         SwingUtilities.invokeLater(gui);
         game.createTiles();
-        while (true) {
-            game.update();
-            gui.getUpdateable().update();
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Breakout.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        game.start();
+//        while (true) {
+//            game.update();
+//            gui.getUpdateable().update();
+//            try {
+//                Thread.sleep(8);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(Breakout.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
     }
 
 }

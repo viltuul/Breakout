@@ -15,15 +15,15 @@ public class Ball {
 
     private int x;
     private int y;
-    private int speedX;
-    private int speedY;
+    private double speedX;
+    private double speedY;
 
     public Ball(int x, int y) {
         this.x = x;
         this.y = y;
         Random random = new Random();
-        this.speedX = random.nextInt(3) - 1;
-        this.speedY = -1;
+        this.speedX = random.nextInt(2)-1;
+        this.speedY = -2;
     }
 
     public int getX() {
@@ -42,19 +42,19 @@ public class Ball {
         this.y = y;
     }
 
-    public int getSpeedX() {
+    public double getSpeedX() {
         return speedX;
     }
 
-    public int getSpeedY() {
+    public double getSpeedY() {
         return speedY;
     }
 
-    public void setSpeedX(int speedX) {
+    public void setSpeedX(double speedX) {
         this.speedX = speedX;
     }
 
-    public void setSpeedY(int speedY) {
+    public void setSpeedY(double speedY) {
         this.speedY = speedY;
     }
 
