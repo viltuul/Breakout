@@ -13,8 +13,8 @@ import java.util.Random;
  */
 public class Ball {
 
-    private int x;
-    private int y;
+    private double x;
+    private double y;
     private double speedX;
     private double speedY;
 
@@ -26,11 +26,11 @@ public class Ball {
         this.speedY = -2;
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 

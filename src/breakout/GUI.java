@@ -32,7 +32,7 @@ public class GUI implements Runnable {
         frame = new JFrame("Breakout");
         int width = (game.getSize());
         int height = (game.getSize());
-        frame.setPreferredSize(new Dimension(width, height));
+        frame.setPreferredSize(new Dimension(width+50, height+50));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createComponents(frame.getContentPane());
         frame.pack();

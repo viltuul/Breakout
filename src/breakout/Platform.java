@@ -36,13 +36,13 @@ public class Platform extends JPanel implements Updateable {
     private void drawBall() {
         Ball ball = game.getBall();
         graphics.setColor(Color.gray);
-        graphics.fillOval(ball.getX(), ball.getY(), 10, 10);
+        graphics.fillOval((int) ball.getX(), (int) ball.getY(), 10, 10);
     }
 
     private void drawShuttle() {
         Shuttle shuttle = game.getShuttle();
         graphics.setColor(Color.blue);
-        graphics.fill3DRect(shuttle.getX()-shuttle.getWidth(), shuttle.getY(), shuttle.getWidth()*2, 6, true);
+        graphics.fill3DRect(shuttle.getX() - shuttle.getWidth(), shuttle.getY(), shuttle.getWidth() * 2, 6, true);
     }
 
     private void drawTiles() {
