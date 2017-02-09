@@ -9,7 +9,7 @@ package breakout;
  *
  * @author ville
  */
-public class Tile implements Collisionable{
+public class Tile {
 
     private int x;
     private int y;

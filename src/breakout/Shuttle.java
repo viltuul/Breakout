@@ -9,7 +9,7 @@ package breakout;
  *
  * @author ville
  */
-public class Shuttle implements Collisionable {
+public class Shuttle {
 
     private int x;
     private int y;
@@ -18,7 +18,7 @@ public class Shuttle implements Collisionable {
     public Shuttle(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = 10;
+        this.width = 40;
 
     }
 

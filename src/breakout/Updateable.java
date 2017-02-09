@@ -9,7 +9,7 @@ package breakout;
  *
  * @author ville
  */
-interface Updateable {
+public interface Updateable {
 
     void update();
 }

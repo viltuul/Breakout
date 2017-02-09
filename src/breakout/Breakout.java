@@ -21,6 +21,7 @@ public class Breakout {
     public static void main(String[] args) {
         Game game = new Game(800);
         GUI gui = new GUI(game);
+        game.setUpdateable(gui.getUpdateable());
         SwingUtilities.invokeLater(gui);
         game.createTiles();
         game.start();

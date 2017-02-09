@@ -14,24 +14,23 @@ import java.awt.event.KeyListener;
  */
 public class KeyboardListener implements KeyListener {
 
-    private Game game;
+    private Shuttle shuttle;
 
-    public KeyboardListener(Game game) {
-        this.game = game;
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            game.getShuttle().setX(game.getShuttle().getX() + 5);
-            System.out.println("fytch");
-        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            game.getShuttle().setX(game.getShuttle().getX() - 5);
-        }
+    public KeyboardListener(Shuttle shuttle) {
+        this.shuttle = shuttle;
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            shuttle.setX(shuttle.getX() + 50);
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            shuttle.setX(shuttle.getX() - 50);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
     }
 
     @Override

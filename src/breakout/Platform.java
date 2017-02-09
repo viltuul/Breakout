@@ -21,7 +21,7 @@ public class Platform extends JPanel implements Updateable {
 
     public Platform(Game game) {
         this.game = game;
-        super.setBackground(Color.white);
+        super.setBackground(Color.green);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class Platform extends JPanel implements Updateable {
     private void drawShuttle() {
         Shuttle shuttle = game.getShuttle();
         graphics.setColor(Color.blue);
-        graphics.fill3DRect(shuttle.getX(), shuttle.getY(), shuttle.getWidth()*2, 6, true);
+        graphics.fill3DRect(shuttle.getX()-shuttle.getWidth(), shuttle.getY(), shuttle.getWidth()*2, 6, true);
     }
 
     private void drawTiles() {
