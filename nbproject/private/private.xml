@@ -2,6 +2,16 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Updateable.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Breakout.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Shuttle.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Tile.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/KeyboardListener.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Game.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/GUI.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Platform.java</file>
+            <file>file:/home/ville/NetBeansProjects/Breakout/src/breakout/Ball.java</file>
+        </group>
     </open-files>
 </project-private>

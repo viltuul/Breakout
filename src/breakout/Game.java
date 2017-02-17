@@ -1,21 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package breakout;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
+ * Game's logic class.
  *
  * @author ville
  */
@@ -27,12 +19,18 @@ public class Game extends Timer implements ActionListener, Updateable {
     private int size;
     private Updateable updateable;
 
-    public Game(int size) {
-        super(8, null);
+    /**
+     * Creates the game. Sets the timer on the game, sets the size of the
+     * platform, creates ball and places it on the middle of the game, creates
+     * shuttle and places it on the bottom middlei of the game, creates list for
+     * the Tiles and adds an actionlistener to the game.
+     */
+    public Game() {
+        super(4, null);
+        this.size = 800;
         this.ball = new Ball(size / 2, size / 2);
         this.shuttle = new Shuttle(size - 100, size - 100);
         this.tiles = new ArrayList();
-        this.size = size;
         addActionListener(this);
     }
 
@@ -55,12 +53,14 @@ public class Game extends Timer implements ActionListener, Updateable {
     public ArrayList<Tile> getTiles() {
         return tiles;
     }
-
+/**
+ * Creates tiles and adds them to the tiles list.
+ */
     public void createTiles() {
-        for (int i = 0; i < 20; i++) {
-            tiles.add(new Tile(i * 40, 10));
-            tiles.add(new Tile(i * 40, 20));
-            tiles.add(new Tile(i * 40, 30));
+        for (int i = 0; i < 8; i++) {
+            tiles.add(new Tile(i * 100, 10));
+            tiles.add(new Tile(i * 100, 20));
+            tiles.add(new Tile(i * 100, 30));
         }
     }
 

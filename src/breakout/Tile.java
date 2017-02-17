@@ -19,7 +19,7 @@ public class Tile {
     public Tile(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = 10;
+        this.width = 100;
         this.health = 1;
     }
 

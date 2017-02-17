@@ -23,9 +23,9 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            shuttle.setX(shuttle.getX() + 50);
+            shuttle.setX(shuttle.getX() + 25);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            shuttle.setX(shuttle.getX() - 50);
+            shuttle.setX(shuttle.getX() - 25);
         }
     }
 

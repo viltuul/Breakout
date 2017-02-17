@@ -18,7 +18,7 @@ public class Shuttle {
     public Shuttle(int x, int y) {
         this.x = x;
         this.y = y;
-        this.width = 40;
+        this.width = 160;
 
     }
 

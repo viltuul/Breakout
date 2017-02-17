@@ -1,19 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package breakout;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyListener;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
 /**
- *
+ * Graphical user interface
  * @author ville
  */
 public class GUI implements Runnable {
@@ -32,7 +25,7 @@ public class GUI implements Runnable {
         frame = new JFrame("Breakout");
         int width = (game.getSize());
         int height = (game.getSize());
-        frame.setPreferredSize(new Dimension(width+50, height+50));
+        frame.setPreferredSize(new Dimension(width + 50, height + 50));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         createComponents(frame.getContentPane());
         frame.pack();
