@@ -42,7 +42,7 @@ public class Platform extends JPanel implements Updateable {
     private void drawShuttle() {
         Shuttle shuttle = game.getShuttle();
         graphics.setColor(Color.blue);
-        graphics.fill3DRect(shuttle.getX() - shuttle.getWidth(), shuttle.getY(), shuttle.getWidth(), 24, true);
+        graphics.fill3DRect(shuttle.getX(), shuttle.getY(), shuttle.getWidth(), 24, true);
     }
 
     private void drawTiles() {

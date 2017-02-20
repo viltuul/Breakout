@@ -23,8 +23,8 @@ public class Ball {
         this.x = x;
         this.y = y;
         Random random = new Random();
-        this.speedX = random.nextInt(4) - 2;
-        this.speedY = -2;
+        this.speedX = random.nextDouble() - 0.5;
+        this.speedY = -1;
     }
 
     public double getX() {

@@ -34,7 +34,7 @@ public class GUI implements Runnable {
 
     public void createComponents(Container container) {
         container.add(platform);
-        KeyboardListener listener = new KeyboardListener(game.getShuttle());
+        KeyboardListener listener = new KeyboardListener(game);
         frame.addKeyListener(listener);
     }
 

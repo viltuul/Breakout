@@ -15,9 +15,11 @@ import java.awt.event.KeyListener;
 public class KeyboardListener implements KeyListener {
 
     private Shuttle shuttle;
+    private Game game;
 
-    public KeyboardListener(Shuttle shuttle) {
-        this.shuttle = shuttle;
+    public KeyboardListener(Game game) {
+        this.shuttle = game.getShuttle();
+        this.game = game;
     }
 
     @Override
@@ -26,6 +28,16 @@ public class KeyboardListener implements KeyListener {
             shuttle.setX(shuttle.getX() + 25);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
             shuttle.setX(shuttle.getX() - 25);
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE){
+            if (game.isStop()){
+                game.setStop(false);
+                game.start();
+            } else {
+                game.stop();
+                game.setStop(true);
+            }
+        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+            game.getBall().setSpeedX(0);
         }
     }
 

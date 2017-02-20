@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 
 /**
@@ -18,6 +20,7 @@ public class Game extends Timer implements ActionListener, Updateable {
     private ArrayList<Tile> tiles;
     private int size;
     private Updateable updateable;
+    private boolean stop;
 
     /**
      * Creates the game. Sets the timer on the game, sets the size of the
@@ -26,12 +29,13 @@ public class Game extends Timer implements ActionListener, Updateable {
      * the Tiles and adds an actionlistener to the game.
      */
     public Game() {
-        super(4, null);
+        super(2, null);
         this.size = 800;
         this.ball = new Ball(size / 2, size / 2);
         this.shuttle = new Shuttle(size - 100, size - 100);
         this.tiles = new ArrayList();
         addActionListener(this);
+        this.stop = false;
     }
 
     public void setUpdateable(Updateable updateable) {
@@ -53,9 +57,10 @@ public class Game extends Timer implements ActionListener, Updateable {
     public ArrayList<Tile> getTiles() {
         return tiles;
     }
-/**
- * Creates tiles and adds them to the tiles list.
- */
+
+    /**
+     * Creates tiles and adds them to the tiles list.
+     */
     public void createTiles() {
         for (int i = 0; i < 8; i++) {
             tiles.add(new Tile(i * 100, 10));
@@ -75,12 +80,21 @@ public class Game extends Timer implements ActionListener, Updateable {
 
     public void shuttleCollision() {
         Random rnd = new Random();
-        if (ball.getY() == shuttle.getY() && ball.getX() >= shuttle.getX() - shuttle.getWidth() && ball.getX() <= shuttle.getX()) {
+        double constant;
+        if (ball.getY() + 35 == shuttle.getY() && ball.getX() + 40 >= shuttle.getX() && ball.getX() <= shuttle.getX() + shuttle.getWidth()) {
             ball.setSpeedY(ball.getSpeedY() * (-1));
-            ball.setSpeedX(ball.getSpeedX() - 1);
-        } else if (ball.getY() == shuttle.getY() && ball.getX() <= shuttle.getX() + shuttle.getWidth() && ball.getX() >= shuttle.getX()) {
-            ball.setSpeedY(ball.getSpeedY() * (-1));
-            ball.setSpeedX(ball.getSpeedX() + 1);
+            if (ball.getX() + 40 <= shuttle.getX() + shuttle.getWidth() / 2) {
+                constant = (shuttle.getX() - ball.getX()) / shuttle.getWidth()/2;
+                ball.setSpeedX(ball.getSpeedX() - constant);
+                System.out.println(ball.getSpeedX());
+            } else {
+                constant = (ball.getX() - shuttle.getX()) / shuttle.getWidth()/2;
+                ball.setSpeedX(ball.getSpeedX() + constant);
+                System.out.println(ball.getSpeedX());
+            }
+//        } else if (ball.getY() == shuttle.getY() && ball.getX() <= shuttle.getX() + shuttle.getWidth() && ball.getX() >= shuttle.getX()) {
+//            ball.setSpeedY(ball.getSpeedY() * (-1));
+//            ball.setSpeedX(ball.getSpeedX() + 0.1);
         }
     }
 
@@ -111,4 +125,13 @@ public class Game extends Timer implements ActionListener, Updateable {
         updateable.update();
 
     }
+
+    public boolean isStop() {
+        return stop;
+    }
+
+    public void setStop(boolean stop) {
+        this.stop = stop;
+    }
+
 }
