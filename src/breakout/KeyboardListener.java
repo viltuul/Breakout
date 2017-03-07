@@ -38,6 +38,7 @@ public class KeyboardListener implements KeyListener {
             }
         } else if (e.getKeyCode() == KeyEvent.VK_SHIFT){
             game.getBall().setSpeedX(0);
+            game.getBall().setSpeedY(game.getBall().getSpeedY()*-1);
         }
     }
 

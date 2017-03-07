@@ -69,6 +69,10 @@ public class Game extends Timer implements ActionListener, Updateable {
         }
     }
 
+    /**
+     * Collisions the ball with the tiles. Changes the ball's speedY to -1 *
+     * speedY
+     */
     public void tileCollision() {
         for (Tile tile : tiles) {
             if (ball.getY() == tile.getY() && ball.getX() >= tile.getX() && ball.getX() <= tile.getX() + tile.getWidth()) {
@@ -78,17 +82,22 @@ public class Game extends Timer implements ActionListener, Updateable {
         }
     }
 
+    /**
+     * Collisions the ball with the shuttle. Changes the ball's speedY to -1*
+     * speedY and also changes speedX according to the point of the shuttle
+     * where the ball hit.
+     */
     public void shuttleCollision() {
         Random rnd = new Random();
         double constant;
         if (ball.getY() + 35 == shuttle.getY() && ball.getX() + 40 >= shuttle.getX() && ball.getX() <= shuttle.getX() + shuttle.getWidth()) {
             ball.setSpeedY(ball.getSpeedY() * (-1));
             if (ball.getX() + 40 <= shuttle.getX() + shuttle.getWidth() / 2) {
-                constant = (shuttle.getX() - ball.getX()) / shuttle.getWidth()/2;
+                constant = (ball.getX()- shuttle.getX()+shuttle.getWidth()/2) / shuttle.getWidth() / 2;
                 ball.setSpeedX(ball.getSpeedX() - constant);
                 System.out.println(ball.getSpeedX());
             } else {
-                constant = (ball.getX() - shuttle.getX()) / shuttle.getWidth()/2;
+                constant = (ball.getX() - shuttle.getX()) / shuttle.getWidth() / 2;
                 ball.setSpeedX(ball.getSpeedX() + constant);
                 System.out.println(ball.getSpeedX());
             }
@@ -97,7 +106,9 @@ public class Game extends Timer implements ActionListener, Updateable {
 //            ball.setSpeedX(ball.getSpeedX() + 0.1);
         }
     }
-
+/**
+ * Moves the ball and makes sure it doesn't go out of bounds
+ */
     private void moveBall() {
         ball.move();
         if (ball.getX() >= size && ball.getSpeedX() > 0) {
