@@ -93,7 +93,7 @@ public class Game extends Timer implements ActionListener, Updateable {
         if (ball.getY() + 35 == shuttle.getY() && ball.getX() + 40 >= shuttle.getX() && ball.getX() <= shuttle.getX() + shuttle.getWidth()) {
             ball.setSpeedY(ball.getSpeedY() * (-1));
             if (ball.getX() + 40 <= shuttle.getX() + shuttle.getWidth() / 2) {
-                constant = (ball.getX()- shuttle.getX()+shuttle.getWidth()/2) / shuttle.getWidth() / 2;
+                constant = (ball.getX() - shuttle.getX() + shuttle.getWidth() / 2) / shuttle.getWidth() / 2;
                 ball.setSpeedX(ball.getSpeedX() - constant);
                 System.out.println(ball.getSpeedX());
             } else {
@@ -106,9 +106,10 @@ public class Game extends Timer implements ActionListener, Updateable {
 //            ball.setSpeedX(ball.getSpeedX() + 0.1);
         }
     }
-/**
- * Moves the ball and makes sure it doesn't go out of bounds
- */
+
+    /**
+     * Moves the ball and makes sure it doesn't go out of bounds
+     */
     private void moveBall() {
         ball.move();
         if (ball.getX() >= size && ball.getSpeedX() > 0) {
@@ -117,7 +118,9 @@ public class Game extends Timer implements ActionListener, Updateable {
             ball.setSpeedX(ball.getSpeedX() * -1);
         }
         if (ball.getY() == size && ball.getSpeedY() > 0) {
-            ball.setSpeedY(ball.getSpeedY() * -1);
+//            ball.setSpeedY(ball.getSpeedY() * -1);
+            ball.setSpeedY(0);
+            ball.setSpeedX(0);
         } else if (ball.getY() == 0 && ball.getSpeedY() < 0) {
             ball.setSpeedY(ball.getSpeedY() * -1);
         }
