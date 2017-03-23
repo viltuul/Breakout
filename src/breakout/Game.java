@@ -1,5 +1,6 @@
 package breakout;
 
+import com.sun.javafx.geom.Matrix3f;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class Game extends Timer implements ActionListener {
     private ArrayList<Tile> tiles;
     private int size;
     private boolean stop;
+    private boolean gameOver;
     private int score;
     private GUI gui;
 
@@ -32,16 +34,33 @@ public class Game extends Timer implements ActionListener {
      */
     public Game() {
         super(2, null);
-        addActionListener(this);
         this.size = 800;
-        this.ball = new Ball(size / 2, size - 140);
-        this.shuttle = new Shuttle(size / 2, size);
-        this.tiles = new ArrayList();
-        this.stop = true;
-        this.score = 0;
         this.gui = new GUI(this);
         SwingUtilities.invokeLater(gui);
+        this.shuttle = new Shuttle();
+        this.ball = new Ball();
+        addActionListener(this);
+    }
+
+    @Override
+    public void start() {
+        this.tiles = new ArrayList();
         this.createTiles();
+        ball.setX(size / 2);
+        ball.setY(size - 140);
+        ball.setStartingSpeed();
+        shuttle.setX(size / 2);
+        shuttle.setY(size);
+        shuttle.setHealth(3);
+        this.stop = true;
+        this.gameOver = false;
+        this.score = 0;
+        super.start();
+    }
+
+    @Override
+    public void restart() {
+        this.start();
     }
 
     public int getSize() {
@@ -68,9 +87,22 @@ public class Game extends Timer implements ActionListener {
      * Creates tiles and adds them to the tiles list.
      */
     public void createTiles() {
-        for (int j = 1; j < 15; j++) {
-            for (int i = 0; i < 8; i++) {
-                tiles.add(new Tile(i * 100 + 5, 100 + 25 * j));
+
+        int[][] scores = {{1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 2, 2, 2, 2, 2, 2, 1},
+        {2, 3, 3, 3, 3, 3, 3, 2},
+        {3, 4, 4, 4, 4, 4, 4, 3},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1, 1},};
+
+        int health = 4;
+        for (int j = 1; j < scores.length; j++) {
+            for (int i = 0; i < scores[j].length; i++) {
+                tiles.add(new Tile(i * 100 + 5, 100 + 25 * j, scores[j][i]));
             }
         }
     }
@@ -83,8 +115,11 @@ public class Game extends Timer implements ActionListener {
         for (Tile tile : tiles) {
             if (tile.getY() == ball.getY() && ball.getX() + 20 >= tile.getX() && ball.getX() + 20 <= tile.getX() + tile.getWidth()) {
                 ball.setSpeedY(ball.getSpeedY() * (-1));
-                tile.setX(size + 100);
+                tile.hit();
                 score += 100;
+                if (tile.getHealth() <= 0) {
+                    tile.setX(size + 100);
+                }
 
             }
         }
@@ -129,8 +164,14 @@ public class Game extends Timer implements ActionListener {
             ball.setSpeedX(ball.getSpeedX() * -1);
         }
         if (ball.getY() == size && ball.getSpeedY() > 0) {
-            ball.setSpeedY(0);
-            ball.setSpeedX(0);
+            shuttle.loseHealth();
+            if (shuttle.getHealth() == 0) {
+                ball.setSpeedY(0);
+                ball.setSpeedX(0);
+                gui.youLose();
+            } else {
+                ball.setSpeedY(ball.getSpeedY()*-1);
+            }
             // toDo gameOver
         } else if (ball.getY() <= 100 && ball.getSpeedY() < 0) {
             ball.setSpeedY(ball.getSpeedY() * -1);
@@ -161,7 +202,7 @@ public class Game extends Timer implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         update();
         gui.getPlatform().update();
-        gui.updateScore(score);
+        gui.updateData(score);
 
     }
 

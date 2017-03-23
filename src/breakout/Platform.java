@@ -18,10 +18,17 @@ public class Platform extends JPanel {
 
     private Game game;
     private Graphics graphics;
+    private Color[] colors;
 
     public Platform(Game game) {
         this.game = game;
         super.setBackground(Color.LIGHT_GRAY);
+        this.colors = new Color[5];
+        colors[0] = Color.white;
+        colors[1] = Color.yellow;
+        colors[2] = Color.green;
+        colors[3] = Color.blue;
+        colors[4] = Color.black;
     }
 
     @Override
@@ -42,18 +49,18 @@ public class Platform extends JPanel {
     private void drawShuttle() {
         Shuttle shuttle = game.getShuttle();
         graphics.setColor(Color.darkGray);
-        graphics.fillOval(shuttle.getX(), shuttle.getY()-1, 24, 25);
-        graphics.fillOval(shuttle.getX() + shuttle.getWidth() - 14, shuttle.getY()-1, 24, 25);
+        graphics.fillOval(shuttle.getX(), shuttle.getY() - 1, 24, 25);
+        graphics.fillOval(shuttle.getX() + shuttle.getWidth() - 14, shuttle.getY() - 1, 24, 25);
         graphics.setColor(Color.blue);
         graphics.fillRect(shuttle.getX() + 12, shuttle.getY(), shuttle.getWidth() - 12, 24);
-        graphics.setColor(new Color(255,140,0));
+        graphics.setColor(new Color(255, 140, 0));
         graphics.fill3DRect(shuttle.getX() + 24, shuttle.getY() + 16, shuttle.getWidth() - 36, 8, true);
     }
 
     private void drawTiles() {
         ArrayList<Tile> tiles = game.getTiles();
-        graphics.setColor(Color.yellow);
         for (Tile tile : tiles) {
+            graphics.setColor(colors[tile.getHealth()]);
             graphics.fill3DRect(tile.getX(), tile.getY(), tile.getWidth(), 20, true);
         }
     }

@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
@@ -59,15 +60,24 @@ public class GUI implements Runnable {
 
     }
 
+    public JFrame getFrame() {
+        return frame;
+    }
+
     public Platform getPlatform() {
         return platform;
     }
 
-    public void updateScore(int score) {
+    public void updateData(int score) {
         scoreLabel.setFont(new Font("Serif", Font.BOLD, 60));
-        scoreLabel.setText("Score: " + score);
+        scoreLabel.setText("Hp: " + game.getShuttle().getHealth() + "  Score: " + score);
         scorePanel.add(scoreLabel);
         frame.add(scorePanel);
+    }
+
+    public void youLose() {
+        JOptionPane.showMessageDialog(null, "GAME OVER, points: " + game.getScore());
+        game.restart();
     }
 
 }

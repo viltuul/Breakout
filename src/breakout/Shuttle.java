@@ -15,12 +15,14 @@ public class Shuttle {
     private int y;
     private int width;
     private double speedX;
+    private int health;
 
-    public Shuttle(int x, int y) {
-        this.x = x;
-        this.y = y;
+    public Shuttle() {
+        this.x = 0;
+        this.y = 0;
         this.width = 160;
         this.speedX = 0;
+        this.health = 3;
 
     }
 
@@ -50,6 +52,18 @@ public class Shuttle {
 
     public void move() {
         x += speedX;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public void loseHealth() {
+        health--;
     }
 
 }

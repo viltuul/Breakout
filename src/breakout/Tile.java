@@ -23,6 +23,13 @@ public class Tile {
         this.health = 1;
     }
 
+    public Tile(int x, int y, int health) {
+        this.x = x;
+        this.y = y;
+        this.width = 100;
+        this.health = health;
+    }
+
     public int getX() {
         return x;
     }
@@ -41,6 +48,9 @@ public class Tile {
 
     public int getHealth() {
         return health;
+    }
+    public void hit(){
+        health--;
     }
 
     public void setHealth(int health) {
