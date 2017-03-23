@@ -21,19 +21,6 @@ public class Breakout {
     public static void main(String[] args) {
         Game game = new Game();
         GUI gui = new GUI(game);
-        game.setUpdateable(gui.getUpdateable());
-        SwingUtilities.invokeLater(gui);
-        game.createTiles();
         game.start();
-//        while (true) {
-//            game.update();
-//            gui.getUpdateable().update();
-//            try {
-//                Thread.sleep(8);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Breakout.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
     }
-
 }

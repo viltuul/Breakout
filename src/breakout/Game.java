@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -13,14 +14,15 @@ import javax.swing.Timer;
  *
  * @author ville
  */
-public class Game extends Timer implements ActionListener, Updateable {
+public class Game extends Timer implements ActionListener {
 
     private Ball ball;
     private Shuttle shuttle;
     private ArrayList<Tile> tiles;
     private int size;
-    private Updateable updateable;
     private boolean stop;
+    private int score;
+    private GUI gui;
 
     /**
      * Creates the game. Sets the timer on the game, sets the size of the
@@ -30,16 +32,16 @@ public class Game extends Timer implements ActionListener, Updateable {
      */
     public Game() {
         super(2, null);
-        this.size = 800;
-        this.ball = new Ball(size / 2, size / 2);
-        this.shuttle = new Shuttle(size - 100, size - 100);
-        this.tiles = new ArrayList();
         addActionListener(this);
-        this.stop = false;
-    }
-
-    public void setUpdateable(Updateable updateable) {
-        this.updateable = updateable;
+        this.size = 800;
+        this.ball = new Ball(size / 2, size - 140);
+        this.shuttle = new Shuttle(size / 2, size);
+        this.tiles = new ArrayList();
+        this.stop = true;
+        this.score = 0;
+        this.gui = new GUI(this);
+        SwingUtilities.invokeLater(gui);
+        this.createTiles();
     }
 
     public int getSize() {
@@ -58,14 +60,18 @@ public class Game extends Timer implements ActionListener, Updateable {
         return tiles;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     /**
      * Creates tiles and adds them to the tiles list.
      */
     public void createTiles() {
-        for (int i = 0; i < 8; i++) {
-            tiles.add(new Tile(i * 100, 10));
-            tiles.add(new Tile(i * 100, 20));
-            tiles.add(new Tile(i * 100, 30));
+        for (int j = 1; j < 15; j++) {
+            for (int i = 0; i < 8; i++) {
+                tiles.add(new Tile(i * 100 + 5, 100 + 25 * j));
+            }
         }
     }
 
@@ -75,9 +81,11 @@ public class Game extends Timer implements ActionListener, Updateable {
      */
     public void tileCollision() {
         for (Tile tile : tiles) {
-            if (ball.getY() == tile.getY() && ball.getX() >= tile.getX() && ball.getX() <= tile.getX() + tile.getWidth()) {
+            if (tile.getY() == ball.getY() && ball.getX() + 20 >= tile.getX() && ball.getX() + 20 <= tile.getX() + tile.getWidth()) {
                 ball.setSpeedY(ball.getSpeedY() * (-1));
                 tile.setX(size + 100);
+                score += 100;
+
             }
         }
     }
@@ -101,9 +109,6 @@ public class Game extends Timer implements ActionListener, Updateable {
                 ball.setSpeedX(ball.getSpeedX() + constant);
                 System.out.println(ball.getSpeedX());
             }
-//        } else if (ball.getY() == shuttle.getY() && ball.getX() <= shuttle.getX() + shuttle.getWidth() && ball.getX() >= shuttle.getX()) {
-//            ball.setSpeedY(ball.getSpeedY() * (-1));
-//            ball.setSpeedX(ball.getSpeedX() + 0.1);
         }
     }
 
@@ -112,31 +117,51 @@ public class Game extends Timer implements ActionListener, Updateable {
      */
     private void moveBall() {
         ball.move();
-        if (ball.getX() >= size && ball.getSpeedX() > 0) {
+        ballOutOfBounds();
+        tileCollision();
+        shuttleCollision();
+    }
+
+    private void ballOutOfBounds() {
+        if (ball.getX() + 30 >= size && ball.getSpeedX() > 0) {
             ball.setSpeedX(ball.getSpeedX() * -1);
         } else if (ball.getX() <= 0 && ball.getSpeedX() < 0) {
             ball.setSpeedX(ball.getSpeedX() * -1);
         }
         if (ball.getY() == size && ball.getSpeedY() > 0) {
-//            ball.setSpeedY(ball.getSpeedY() * -1);
             ball.setSpeedY(0);
             ball.setSpeedX(0);
-        } else if (ball.getY() == 0 && ball.getSpeedY() < 0) {
+            // toDo gameOver
+        } else if (ball.getY() <= 100 && ball.getSpeedY() < 0) {
             ball.setSpeedY(ball.getSpeedY() * -1);
         }
     }
 
-    @Override
+    private void moveShuttle() {
+        shuttle.move();
+        shuttleOutOfBounds();
+    }
+
+    private void shuttleOutOfBounds() {
+        if (shuttle.getX() <= 10) {
+            shuttle.setX(10);
+        } else if (shuttle.getX() >= size - shuttle.getWidth()) {
+            shuttle.setX(size - shuttle.getWidth());
+        }
+    }
+
     public void update() {
-        moveBall();
-        tileCollision();
-        shuttleCollision();
+        if (!stop) {
+            moveBall();
+            moveShuttle();
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         update();
-        updateable.update();
+        gui.getPlatform().update();
+        gui.updateScore(score);
 
     }
 

@@ -14,11 +14,13 @@ public class Shuttle {
     private int x;
     private int y;
     private int width;
+    private double speedX;
 
     public Shuttle(int x, int y) {
         this.x = x;
         this.y = y;
         this.width = 160;
+        this.speedX = 0;
 
     }
 
@@ -38,8 +40,16 @@ public class Shuttle {
         this.y = y;
     }
 
+    public void setSpeedX(double speed) {
+        speedX = speed;
+    }
+
     public int getWidth() {
         return width;
+    }
+
+    public void move() {
+        x += speedX;
     }
 
 }

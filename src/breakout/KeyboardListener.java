@@ -25,20 +25,18 @@ public class KeyboardListener implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            shuttle.setX(shuttle.getX() + 25);
+            shuttle.setSpeedX(1.5);
         } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            shuttle.setX(shuttle.getX() - 25);
-        } else if (e.getKeyCode() == KeyEvent.VK_SPACE){
-            if (game.isStop()){
+            shuttle.setSpeedX(-1.5);
+        } else if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+            if (game.isStop()) {
                 game.setStop(false);
-                game.start();
             } else {
-                game.stop();
                 game.setStop(true);
             }
-        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT){
+        } else if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
             game.getBall().setSpeedX(0);
-            game.getBall().setSpeedY(game.getBall().getSpeedY()*-1);
+            game.getBall().setSpeedY(game.getBall().getSpeedY() * -1);
         }
     }
 
@@ -48,6 +46,11 @@ public class KeyboardListener implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+            shuttle.setSpeedX(0);
+        } else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            shuttle.setSpeedX(0);
+        }
     }
 
 }
