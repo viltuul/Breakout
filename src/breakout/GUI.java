@@ -69,8 +69,8 @@ public class GUI implements Runnable {
     }
 
     public void updateData(int score) {
-        scoreLabel.setFont(new Font("Serif", Font.BOLD, 60));
-        scoreLabel.setText("Hp: " + game.getShuttle().getHealth() + "  Score: " + score);
+        scoreLabel.setFont(new Font("Serif", Font.BOLD, 48));
+        scoreLabel.setText("Lvl: " + game.getLevel().getDiffuculty() + " Hp: " + game.getShuttle().getHealth() + "  Score: " + score);
         scorePanel.add(scoreLabel);
         frame.add(scorePanel);
     }

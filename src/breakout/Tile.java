@@ -49,7 +49,8 @@ public class Tile {
     public int getHealth() {
         return health;
     }
-    public void hit(){
+
+    public void hit() {
         health--;
     }
 
@@ -59,6 +60,19 @@ public class Tile {
 
     public int getWidth() {
         return width;
+    }
+
+    public boolean isDestroyed() {
+        if (health == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return x + "," + y;
     }
 
 }

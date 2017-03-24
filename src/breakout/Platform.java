@@ -58,7 +58,7 @@ public class Platform extends JPanel {
     }
 
     private void drawTiles() {
-        ArrayList<Tile> tiles = game.getTiles();
+        ArrayList<Tile> tiles = game.getLevel().getTiles();
         for (Tile tile : tiles) {
             graphics.setColor(colors[tile.getHealth()]);
             graphics.fill3DRect(tile.getX(), tile.getY(), tile.getWidth(), 20, true);

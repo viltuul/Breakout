@@ -44,7 +44,7 @@ public class Ball {
 
     public void setStartingSpeed() {
         Random random = new Random();
-        this.speedX = random.nextDouble() - 0.5;
+        this.speedX = random.nextInt(3) - 1;
         this.speedY = -1;
     }
 
@@ -72,5 +72,11 @@ public class Ball {
         x += speedX;
         y += speedY;
     }
+
+    @Override
+    public String toString() {
+        return x+","+y+","+speedX+","+speedY;
+    }
+    
 
 }

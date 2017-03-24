@@ -1,12 +1,9 @@
 package breakout;
 
-import com.sun.javafx.geom.Matrix3f;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -19,12 +16,13 @@ public class Game extends Timer implements ActionListener {
 
     private Ball ball;
     private Shuttle shuttle;
-    private ArrayList<Tile> tiles;
     private int size;
+    private Level level;
     private boolean stop;
     private boolean gameOver;
     private int score;
     private GUI gui;
+    private int diffuculty;
 
     /**
      * Creates the game. Sets the timer on the game, sets the size of the
@@ -40,15 +38,14 @@ public class Game extends Timer implements ActionListener {
         this.shuttle = new Shuttle();
         this.ball = new Ball();
         addActionListener(this);
+        this.diffuculty = 0;
     }
 
     @Override
     public void start() {
-        this.tiles = new ArrayList();
-        this.createTiles();
-        ball.setX(size / 2);
-        ball.setY(size - 140);
-        ball.setStartingSpeed();
+        this.level = new Level(1);
+        level.createTiles();
+        ballStartingPosition();
         shuttle.setX(size / 2);
         shuttle.setY(size);
         shuttle.setHealth(3);
@@ -56,11 +53,6 @@ public class Game extends Timer implements ActionListener {
         this.gameOver = false;
         this.score = 0;
         super.start();
-    }
-
-    @Override
-    public void restart() {
-        this.start();
     }
 
     public int getSize() {
@@ -75,36 +67,12 @@ public class Game extends Timer implements ActionListener {
         return shuttle;
     }
 
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
     public int getScore() {
         return score;
     }
 
-    /**
-     * Creates tiles and adds them to the tiles list.
-     */
-    public void createTiles() {
-
-        int[][] scores = {{1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 2, 2, 2, 2, 2, 2, 1},
-        {2, 3, 3, 3, 3, 3, 3, 2},
-        {3, 4, 4, 4, 4, 4, 4, 3},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},
-        {1, 1, 1, 1, 1, 1, 1, 1},};
-
-        int health = 4;
-        for (int j = 1; j < scores.length; j++) {
-            for (int i = 0; i < scores[j].length; i++) {
-                tiles.add(new Tile(i * 100 + 5, 100 + 25 * j, scores[j][i]));
-            }
-        }
+    public Level getLevel() {
+        return level;
     }
 
     /**
@@ -112,15 +80,14 @@ public class Game extends Timer implements ActionListener {
      * speedY
      */
     public void tileCollision() {
-        for (Tile tile : tiles) {
+        for (Tile tile : level.getTiles()) {
             if (tile.getY() == ball.getY() && ball.getX() + 20 >= tile.getX() && ball.getX() + 20 <= tile.getX() + tile.getWidth()) {
                 ball.setSpeedY(ball.getSpeedY() * (-1));
                 tile.hit();
-                score += 100;
-                if (tile.getHealth() <= 0) {
+                if (tile.getHealth() < 1) {
                     tile.setX(size + 100);
+                    score += 100;
                 }
-
             }
         }
     }
@@ -134,15 +101,17 @@ public class Game extends Timer implements ActionListener {
         Random rnd = new Random();
         double constant;
         if (ball.getY() + 35 == shuttle.getY() && ball.getX() + 40 >= shuttle.getX() && ball.getX() <= shuttle.getX() + shuttle.getWidth()) {
-            ball.setSpeedY(ball.getSpeedY() * (-1));
-            if (ball.getX() + 40 <= shuttle.getX() + shuttle.getWidth() / 2) {
-                constant = (ball.getX() - shuttle.getX() + shuttle.getWidth() / 2) / shuttle.getWidth() / 2;
-                ball.setSpeedX(ball.getSpeedX() - constant);
-                System.out.println(ball.getSpeedX());
-            } else {
-                constant = (ball.getX() - shuttle.getX()) / shuttle.getWidth() / 2;
-                ball.setSpeedX(ball.getSpeedX() + constant);
-                System.out.println(ball.getSpeedX());
+            if (ball.getSpeedY() > 0) {
+                ball.setSpeedY(ball.getSpeedY() * (-1));
+                if (ball.getX() + 40 <= shuttle.getX() + shuttle.getWidth() / 2) {
+                    constant = (ball.getX() - shuttle.getX() + shuttle.getWidth() / 2) / shuttle.getWidth() / 2;
+                    ball.setSpeedX(ball.getSpeedX() - constant);
+                    System.out.println(ball.getSpeedX());
+                } else {
+                    constant = (ball.getX() - shuttle.getX()) / shuttle.getWidth() / 2;
+                    ball.setSpeedX(ball.getSpeedX() + constant);
+                    System.out.println(ball.getSpeedX());
+                }
             }
         }
     }
@@ -170,7 +139,7 @@ public class Game extends Timer implements ActionListener {
                 ball.setSpeedX(0);
                 gui.youLose();
             } else {
-                ball.setSpeedY(ball.getSpeedY()*-1);
+                ball.setSpeedY(ball.getSpeedY() * -1);
             }
             // toDo gameOver
         } else if (ball.getY() <= 100 && ball.getSpeedY() < 0) {
@@ -195,6 +164,7 @@ public class Game extends Timer implements ActionListener {
         if (!stop) {
             moveBall();
             moveShuttle();
+            level.checkTiles();
         }
     }
 
@@ -212,6 +182,19 @@ public class Game extends Timer implements ActionListener {
 
     public void setStop(boolean stop) {
         this.stop = stop;
+    }
+
+    private void ballStartingPosition() {
+        ball.setX(size / 2);
+        ball.setY(size - 140);
+        ball.setStartingSpeed();
+    }
+
+    public void nextLevel() {
+        this.diffuculty = level.getDiffuculty() + 1;
+        this.level = new Level(this.diffuculty);
+        ballStartingPosition();
+        score += 1000 * this.diffuculty;
     }
 
 }
