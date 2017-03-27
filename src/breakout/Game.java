@@ -164,7 +164,9 @@ public class Game extends Timer implements ActionListener {
         if (!stop) {
             moveBall();
             moveShuttle();
-            level.checkTiles();
+            if (level.checkTiles()){
+                this.nextLevel();
+            }
         }
     }
 

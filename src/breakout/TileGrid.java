@@ -16,11 +16,10 @@ public class TileGrid {
     public TileGrid(int level) {
         if (level % 3 == 0) {
             levelThree();
-
         } else if (level % 2 == 1) {
             levelOne();
-        } else if (level == 0) {
-            levelZero();
+//        } else if (level == 0) {
+//            levelZero();
         } else if (level % 2 == 0) {
             levelTwo();
 

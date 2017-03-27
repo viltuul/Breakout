@@ -16,12 +16,10 @@ public final class Level {
     private ArrayList<Tile> tiles;
     private TileGrid grid;
     private int diffuculty;
-    private int unbrokenTiles;
 
     public Level(int diffuculty) {
         this.diffuculty = diffuculty;
         createTiles();
-        this.unbrokenTiles = tiles.size();
     }
 
     /**
@@ -29,7 +27,7 @@ public final class Level {
      */
     public void createTiles() {
         this.tiles = new ArrayList();
-        TileGrid grid = new TileGrid(diffuculty);
+        TileGrid grid = new TileGrid(this.diffuculty);
         int[][] matrix = grid.getLevel();
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 1; j < matrix.length; j++) {
@@ -42,11 +40,17 @@ public final class Level {
         return tiles;
     }
 
-    public void checkTiles() {
+    public boolean checkTiles() {
+        int unbrokenTiles = 0;
         for (Tile tile : tiles) {
             if (!tile.isDestroyed()) {
-                this.unbrokenTiles++;
+                unbrokenTiles++;
             }
+        }
+        if (unbrokenTiles == 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
